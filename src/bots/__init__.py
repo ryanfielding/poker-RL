@@ -1,7 +1,7 @@
-import bots.monte_carlo
+import bots.ai_bot
 import bots.callbot
 
 __all__ = (
-    monte_carlo.__all__,
+    ai_bot.__all__,
     callbot.__all__,
 )
