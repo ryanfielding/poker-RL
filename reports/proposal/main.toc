@@ -1,0 +1,20 @@
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}Overview}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Control System Background}{4}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Problem Investigation}{5}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Expected Outcome(s)}{5}{subsection.1.4}
+\contentsline {section}{\numberline {2}Design Goals and Objectives}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}Objectives}{6}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Nice to Have's}{6}{subsection.2.2}
+\contentsline {section}{\numberline {3}Requirements and Methods}{7}{section.3}
+\contentsline {subsection}{\numberline {3.1}Control Model}{7}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Experimentation}{8}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Requirements}{8}{subsection.3.3}
+\contentsline {section}{\numberline {4}Platform and Tools}{8}{section.4}
+\contentsline {subsection}{\numberline {4.1}Hardware}{8}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Software}{10}{subsection.4.2}
+\contentsline {section}{\numberline {5}Implementation Plan and Timeline}{10}{section.5}
+\contentsline {subsection}{\numberline {5.1}Timeline}{10}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Software Implementation Approach}{11}{subsection.5.2}
+\contentsline {subsubsection}{\numberline {5.2.1}Concerns}{11}{subsubsection.5.2.1}
+\contentsline {section}{\numberline {6}Conclusions}{12}{section.6}
