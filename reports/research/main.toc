@@ -1,0 +1,23 @@
+\contentsline {section}{\numberline {1}Background}{4}{section.1}
+\contentsline {section}{\numberline {2}Research}{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}Machine Learning and Neural Networks}{5}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Udacity Course Concepts}{5}{subsubsection.2.1.1}
+\contentsline {subsection}{\numberline {2.2}Reinforcement Learning}{6}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Why RL?}{6}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Elements of RL}{6}{subsubsection.2.2.2}
+\contentsline {subsection}{\numberline {2.3}Deep Q Learning (Deep RL)}{7}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Overall Architecture - DQN}{8}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}State Encoding}{9}{subsubsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.3}Reward Signal - Bot Strategy}{10}{subsubsection.2.3.3}
+\contentsline {section}{\numberline {3}Implementation Progress}{10}{section.3}
+\contentsline {subsection}{\numberline {3.1}PyPokerEngine}{10}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}PyPokerGUI}{11}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Training Simulation}{12}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}PyTorch}{13}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Google Colab}{13}{subsection.3.5}
+\contentsline {section}{\numberline {4}Other Information}{14}{section.4}
+\contentsline {subsection}{\numberline {4.1}Timeline}{14}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Meeting Schedule}{14}{subsection.4.2}
+\contentsline {section}{\numberline {A}Heads Up Push-or-Fold DQN Model}{15}{appendix.A}
+\contentsline {section}{\numberline {B}Basic PyTorch NN}{16}{appendix.B}
+\contentsline {section}{\numberline {C}Basic PyTorch DQN}{16}{appendix.C}
