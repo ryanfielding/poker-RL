@@ -113,8 +113,9 @@ class DQNPlayer(BasePokerPlayer):
 #             self.update_model = self.trainer.minimize(self.loss)
             self.update_model = self.trainer.apply_gradients(zip(grads, variables))
 
-            self.summary_writer = tf.summary.FileWriter('../log/DQN/')
-            
+            self.summary_writer = tf.summary.FileWriter('./log/DQN/')
+            #self.summary_writer = tf.compat.v1.summary.FileWriter('./log/DQN/')
+
         if not is_train:
             self.init = tf.global_variables_initializer()
             self.sess = tf.Session()

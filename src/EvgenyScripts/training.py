@@ -279,7 +279,8 @@ with tf.Session() as sess:
 
             print('Saved model')
         if i % 100 == 0:
-            print(i, total_steps, np.mean(r_list[-10:]), e, np.median(action_list[-200:]))            
+            print(i, total_steps, np.mean(r_list[-10:]), e, np.median(action_list[-200:]))
+        writer = tf.summary.FileWriter('./log/DQN2/', sess.graph)    
     saver.save(sess, path + '/model_' + str(i) + '.ckpt')
 print('Mean reward: {}'.format(sum(r_list) / num_episodes))
 
