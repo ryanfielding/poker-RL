@@ -56,7 +56,11 @@ class RLPlayer(BasePokerPlayer):
         
     # example from MC player - TODO
     def declare_action(self, valid_actions, hole_card, round_state):
-        
+        # updates to round states
+        self.state['legal_actions'] = valid_actions
+        self.state['hole_card'] = hole_card
+        self.state['round_state'] = round_state
+
         # Check whether it is possible to call
         can_call = len([item for item in valid_actions if item['action'] == 'call']) > 0
         if can_call:
@@ -65,8 +69,8 @@ class RLPlayer(BasePokerPlayer):
         else:
             call_amount = 0
 
-        amount = None
         # Set the amount
+        amount = None
         if amount is None:
             items = [item for item in valid_actions if item['action'] == action]
             amount = items[0]['amount']
