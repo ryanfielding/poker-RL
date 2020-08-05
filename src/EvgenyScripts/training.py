@@ -17,7 +17,7 @@ import tensorflow as tf
 import random
 
 import sys
-#sys.path.insert(0, '../scripts/')
+sys.path.insert(0, '../cache/')
 
 import PlayerModels as pm
 from MyEmulator import MyEmulator
@@ -57,7 +57,7 @@ annealings_steps = 100_000 # how many steps to reduce start_E to end_E
 num_episodes = 500_000
 pre_train_steps = 5_000 # how many steps of random action before training begin
 load_model = False
-path = 'src/cache/models/DQN'
+path = '../cache/models/DQN'
 h_size = 128 # the size of final conv layer before spliting it into advantage and value streams
 tau = 0.01 # rate to update target network toward primary network
 is_dueling = True # whether or not to use dueling architecture

@@ -6,7 +6,7 @@ import pickle
 import tensorflow as tf
 
 import sys
-sys.path.insert(0, '../scripts/')
+sys.path.insert(0, '../cache/')
 from util import *
 
 
@@ -47,7 +47,7 @@ class DQNPlayer(BasePokerPlayer):
         self.is_train = is_train
         self.debug = debug
 
-        with open('src/cache/hole_card_estimation.pkl', 'rb') as f:
+        with open('../cache/hole_card_estimation.pkl', 'rb') as f:
             self.hole_card_est = pickle.load(f)
         
         if not is_train:
