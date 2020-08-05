@@ -8,7 +8,8 @@ import tensorflow as tf
 import sys
 sys.path.insert(0, '../cache/')
 from util import *
-
+# disable eager
+tf.compat.v1.disable_eager_execution()
 
 class DQNPlayer(BasePokerPlayer):
     '''
@@ -51,30 +52,32 @@ class DQNPlayer(BasePokerPlayer):
             self.hole_card_est = pickle.load(f)
         
         if not is_train:
-            tf.reset_default_graph()
+            tf.compat.v1.reset_default_graph()
+   
+        self.scalar_input = tf.compat.v1.placeholder(tf.float32, [None, 17 * 17 * 1])
+        self.features_input = tf.compat.v1.placeholder(tf.float32, [None, 20])
         
-        self.scalar_input = tf.placeholder(tf.float32, [None, 17 * 17 * 1])
-        self.features_input = tf.placeholder(tf.float32, [None, 20])
-        
-        xavier_init = tf.contrib.layers.xavier_initializer()
+        xavier_init = tf.compat.v1.keras.initializers.VarianceScaling(scale=1.0, mode="fan_avg", distribution="uniform")
         
         self.img_in = tf.reshape(self.scalar_input, [-1, 17, 17, 1])
-        self.conv1 = tf.layers.conv2d(self.img_in, 32, 5, 2, activation=tf.nn.elu, kernel_initializer=xavier_init)
-        self.conv2 = tf.layers.conv2d(self.conv1, 64, 3, activation=tf.nn.elu, kernel_initializer=xavier_init)
-        self.conv3 = tf.layers.conv2d(self.conv2, self.h_size, 5, activation=tf.nn.elu,
+        self.conv1 = tf.compat.v1.layers.conv2d(self.img_in, 32, 5, 2, activation=tf.nn.elu, kernel_initializer=xavier_init)
+        self.conv2 = tf.compat.v1.layers.conv2d(self.conv1, 64, 3, activation=tf.nn.elu, kernel_initializer=xavier_init)
+        self.conv3 = tf.compat.v1.layers.conv2d(self.conv2, self.h_size, 5, activation=tf.nn.elu,
                                       kernel_initializer=xavier_init)
-        self.conv3_flat = tf.contrib.layers.flatten(self.conv3)
-        self.conv3_flat = tf.layers.dropout(self.conv3_flat)
         
-        self.d1 = tf.layers.dense(self.features_input, 64, activation=tf.nn.elu, kernel_initializer=xavier_init)
-        self.d1 = tf.layers.dropout(self.d1)
-        self.d2 = tf.layers.dense(self.d1, 128, activation=tf.nn.elu, kernel_initializer=xavier_init)
-        self.d2 = tf.layers.dropout(self.d2)
+        #self.conv3_flat = tf.contrib.layers.flatten(self.conv3)
+        self.conv3_flat = tf.compat.v1.layers.flatten(self.conv3)
+        self.conv3_flat = tf.compat.v1.layers.dropout(self.conv3_flat)
+        
+        self.d1 = tf.compat.v1.layers.dense(self.features_input, 64, activation=tf.nn.elu, kernel_initializer=xavier_init)
+        self.d1 = tf.compat.v1.layers.dropout(self.d1)
+        self.d2 = tf.compat.v1.layers.dense(self.d1, 128, activation=tf.nn.elu, kernel_initializer=xavier_init)
+        self.d2 = tf.compat.v1.layers.dropout(self.d2)
         
         self.merge = tf.concat([self.conv3_flat, self.d2], axis=1)
-        self.d3 = tf.layers.dense(self.merge, 256, activation=tf.nn.elu, kernel_initializer=xavier_init)
-        self.d3 = tf.layers.dropout(self.d3)
-        self.d4 = tf.layers.dense(self.d3, self.h_size, activation=tf.nn.elu, kernel_initializer=xavier_init)
+        self.d3 = tf.compat.v1.layers.dense(self.merge, 256, activation=tf.nn.elu, kernel_initializer=xavier_init)
+        self.d3 = tf.compat.v1.layers.dropout(self.d3)
+        self.d4 = tf.compat.v1.layers.dense(self.d3, self.h_size, activation=tf.nn.elu, kernel_initializer=xavier_init)
         
         if is_double:
             self.stream_A, self.stream_V = tf.split(self.d4, 2, 1)
@@ -84,45 +87,45 @@ class DQNPlayer(BasePokerPlayer):
             self.advantage = tf.matmul(self.stream_A, self.AW)
             self.value = tf.matmul(self.stream_V, self.VW)
 
-            self.Q_out = self.value + tf.subtract(self.advantage, tf.reduce_mean(self.advantage, 1, True))
+            self.Q_out = self.value + tf.subtract(self.advantage, tf.reduce_mean(input_tensor=self.advantage, axis=1, keepdims=True))
         else:
-            self.Q_out = tf.layers.dense(self.d4, 5, kernel_initializer=xavier_init)
+            self.Q_out = tf.compat.v1.layers.dense(self.d4, 5, kernel_initializer=xavier_init)
             
-        self.predict = tf.argmax(self.Q_out, 1)
+        self.predict = tf.argmax(input=self.Q_out, axis=1)
         
-        self.target_Q = tf.placeholder(tf.float32, [None])
-        self.actions = tf.placeholder(tf.int32, [None])
+        self.target_Q = tf.compat.v1.placeholder(tf.float32, [None])
+        self.actions = tf.compat.v1.placeholder(tf.int32, [None])
         self.actions_onehot = tf.one_hot(self.actions, total_num_actions, dtype=tf.float32)
         
-        self.Q = tf.reduce_sum(tf.multiply(self.Q_out, self.actions_onehot), axis=1)
+        self.Q = tf.reduce_sum(input_tensor=tf.multiply(self.Q_out, self.actions_onehot), axis=1)
         
         self.td_error = tf.square(self.Q - self.target_Q)
-        self.loss = tf.reduce_mean(self.td_error)
+        self.loss = tf.reduce_mean(input_tensor=self.td_error)
         
         if is_main:
-            variables = tf.trainable_variables() # [:len(tf.trainable_variables()) // 2]
+            variables = tf.compat.v1.trainable_variables() # [:len(tf.trainable_variables()) // 2]
             if is_train:
                 self._print(len(variables))
                 self._print(variables)
-            self.gradients = tf.gradients(self.loss, variables)
+            self.gradients = tf.gradients(ys=self.loss, xs=variables)
 #             self.grad_norms = tf.global_norm(self.gradients)
-            self.var_norms = tf.global_norm(variables)
+            self.var_norms = tf.linalg.global_norm(variables)
             grads, self.grad_norms = tf.clip_by_global_norm(self.gradients, gradient_clip_norm)
-            self.grad_norms = tf.global_norm(grads)
-            self.trainer = tf.train.AdamOptimizer(lr)
+            self.grad_norms = tf.linalg.global_norm(grads)
+            self.trainer = tf.compat.v1.train.AdamOptimizer(lr)
 #             self.update_model = self.trainer.minimize(self.loss)
             self.update_model = self.trainer.apply_gradients(zip(grads, variables))
 
-            self.summary_writer = tf.summary.FileWriter('./log/DQN/')
+            self.summary_writer = tf.compat.v1.summary.FileWriter('./log/DQN/')
             #self.summary_writer = tf.compat.v1.summary.FileWriter('./log/DQN/')
 
         if not is_train:
-            self.init = tf.global_variables_initializer()
-            self.sess = tf.Session()
+            self.init = tf.compat.v1.global_variables_initializer()
+            self.sess = tf.compat.v1.Session()
             self.sess.run(self.init)
         
         if is_restore:
-            self.saver = tf.train.Saver()
+            self.saver = tf.compat.v1.train.Saver()
             ckpt = tf.train.get_checkpoint_state('../cache/models/DQN/')
             self.saver.restore(self.sess, ckpt.model_checkpoint_path)
         
