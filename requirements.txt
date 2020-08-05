@@ -1,5 +1,5 @@
-tensorflow
+tensorflow==1.15.3
 numpy
 pandas
-PyPokerEngine
+PyPokerEngine==1.0.1
 torch
