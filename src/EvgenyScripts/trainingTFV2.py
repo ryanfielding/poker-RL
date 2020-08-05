@@ -116,6 +116,8 @@ saver = tf.compat.v1.train.Saver(max_to_keep=3)
 trainables = tf.compat.v1.trainable_variables()
 target_ops = update_target_graph(trainables, tau)
 my_buffer = ExperienceBuffer()
+# disable eager
+tf.compat.v1.disable_eager_execution()
 
 e = start_E
 step_drop = (start_E - end_E) / annealings_steps
@@ -124,6 +126,9 @@ j_list = []
 r_list = []
 action_list = []
 total_steps = 0
+
+config = tf.compat.v1.ConfigProto()
+sess = tf.compat.v1.Session(config=config)
 
 with tf.compat.v1.Session() as sess:
     sess.run(init)
@@ -272,9 +277,9 @@ with tf.compat.v1.Session() as sess:
         my_buffer.add(episode_buffer.buffer)
         r_list.append(r_all)
         j_list.append(j)
-
+        print(i)
         if i % 1000 == 0:
-#             saver.save(sess, path + '/model_' + str(i) + '.ckpt')
+            # saver.save(sess, path + '/model_' + str(i) + '.ckpt')
             saver.save(sess, path, i)
 
             print('Saved model')
