@@ -280,13 +280,15 @@ with tf.compat.v1.Session() as sess:
         print(i)
         if i % 1000 == 0:
             # saver.save(sess, path + '/model_' + str(i) + '.ckpt')
-            saver.save(sess, path, i)
-
+            #saver.save(sess, path, i)
+            saver.save(sess, '../cache/models/DQN', global_step = i)
             print('Saved model')
         if i % 100 == 0:
             print(i, total_steps, np.mean(r_list[-10:]), e, np.median(action_list[-200:]))
-        writer = tf.compat.v1.summary.FileWriter('./log/DQN2/', sess.graph)    
-    saver.save(sess, path + '/model_' + str(i) + '.ckpt')
+        writer = tf.compat.v1.summary.FileWriter('./log/DQN', sess.graph)    
+    # save after episodes complete
+    #saver.save(sess, path + '/model_' + str(i) + '.ckpt')
+    saver.save(sess, '../cache/models/DQN', global_step = i)
 print('Mean reward: {}'.format(sum(r_list) / num_episodes))
 
 # %%
