@@ -1,8 +1,8 @@
 ante: 0
 blind_structure: null
-initial_stack: 1000
-max_round: 100
-small_blind: 10
+initial_stack: 100
+max_round: 10
+small_blind: 5
 ai_players:
 - name: CallBot1
   path: ./src/bots/callbot.py
