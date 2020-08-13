@@ -183,6 +183,7 @@ class DQNPlayer(BasePokerPlayer):
         self._print(['Start stack:', self.start_stack])
         estimation = self.hole_card_est[(hole_card[0], hole_card[1])]
         self._print(['Estimation:', estimation])
+        pass
     
     def receive_street_start_message(self, street, round_state):
         pass
@@ -193,7 +194,9 @@ class DQNPlayer(BasePokerPlayer):
     def receive_round_result_message(self, winners, hand_info, round_state):
         end_stack = [s['stack'] for s in round_state['seats'] if s['uuid'] == self.uuid][0]
         self._print(['End stack:', end_stack])
+        pass
 
 
 def setup_ai():
+    print('Setting up...')
     return DQNPlayer()
