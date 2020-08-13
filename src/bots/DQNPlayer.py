@@ -198,5 +198,4 @@ class DQNPlayer(BasePokerPlayer):
 
 
 def setup_ai():
-    print('Setting up...')
     return DQNPlayer()
