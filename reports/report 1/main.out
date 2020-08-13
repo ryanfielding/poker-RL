@@ -1,0 +1,23 @@
+\BOOKMARK [1][-]{section.1}{Background}{}% 1
+\BOOKMARK [1][-]{section.2}{Research}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Machine Learning and Neural Networks}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Udacity Course Concepts}{subsection.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Reinforcement Learning}{section.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Why RL?}{subsection.2.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Elements of RL}{subsection.2.2}% 7
+\BOOKMARK [2][-]{subsection.2.3}{Deep Q Learning \(Deep RL\)}{section.2}% 8
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Overall Architecture - DQN}{subsection.2.3}% 9
+\BOOKMARK [3][-]{subsubsection.2.3.2}{State Encoding}{subsection.2.3}% 10
+\BOOKMARK [3][-]{subsubsection.2.3.3}{Reward Signal - Bot Strategy}{subsection.2.3}% 11
+\BOOKMARK [1][-]{section.3}{Implementation Progress}{}% 12
+\BOOKMARK [2][-]{subsection.3.1}{PyPokerEngine}{section.3}% 13
+\BOOKMARK [2][-]{subsection.3.2}{PyPokerGUI}{section.3}% 14
+\BOOKMARK [2][-]{subsection.3.3}{Training Simulation}{section.3}% 15
+\BOOKMARK [2][-]{subsection.3.4}{PyTorch}{section.3}% 16
+\BOOKMARK [2][-]{subsection.3.5}{Google Colab}{section.3}% 17
+\BOOKMARK [1][-]{section.4}{Other Information}{}% 18
+\BOOKMARK [2][-]{subsection.4.1}{Timeline}{section.4}% 19
+\BOOKMARK [2][-]{subsection.4.2}{Meeting Schedule}{section.4}% 20
+\BOOKMARK [1][-]{appendix.A}{Heads Up Push-or-Fold DQN Model}{}% 21
+\BOOKMARK [1][-]{appendix.B}{Basic PyTorch NN}{}% 22
+\BOOKMARK [1][-]{appendix.C}{Basic PyTorch DQN}{}% 23

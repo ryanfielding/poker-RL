@@ -1,9 +1,13 @@
 # poker-RL
-Python poker Texas Hold'em bot through PyTorch reinforcement learning and PyPokerEngine.
+Python poker Texas Hold'em bot through PyTorch/TensorFlow reinforcement learning and PyPokerEngine.
 
-# Play in GUI
+# Play vs the AI in GUI
 #run this command in terminal
 *   `python3 -m pypokergui serve poker_conf.yaml --port 8000 --speed moderate`
+
+# Training
+To visualize tf with tensorboard
+*   `tensorboard --logdir=log/DQN2/`
 
 # Versions (running on Mac OS X 10.15.3)
 *   brew install pyenv

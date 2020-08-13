@@ -1,0 +1,20 @@
+\contentsline {section}{\numberline {1}Background}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}RL Overall Architecture - DQN}{4}{subsection.1.1}
+\contentsline {section}{\numberline {2}Python Poker Environment}{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}PyPokerEngine}{5}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}PyPokerGUI}{5}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Training and Simulation}{6}{subsection.2.3}
+\contentsline {section}{\numberline {3}PyTorch Reinforcement Learning}{7}{section.3}
+\contentsline {subsection}{\numberline {3.1}RLCard - An RL Toolkit}{7}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}TensorFlow Training - NFSP Agent}{8}{subsubsection.3.1.1}
+\contentsline {subsection}{\numberline {3.2}PyTorch}{8}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}DQN and NFSP via PyTorch with PyPokerEngine}{9}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}Google Colab}{9}{subsubsection.3.2.2}
+\contentsline {subsection}{\numberline {3.3}Agent-Environment Integration}{9}{subsection.3.3}
+\contentsline {section}{\numberline {4}Other Information}{10}{section.4}
+\contentsline {subsection}{\numberline {4.1}Timeline}{10}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Meeting Schedule}{10}{subsection.4.2}
+\contentsline {section}{\numberline {A}Heads Up Push-or-Fold DQN Model}{11}{appendix.A}
+\contentsline {section}{\numberline {B}Basic PyTorch NN}{12}{appendix.B}
+\contentsline {section}{\numberline {C}Basic PyTorch DQN}{12}{appendix.C}
+\contentsline {section}{\numberline {D}PyPokerEngine Player Setup}{13}{appendix.D}

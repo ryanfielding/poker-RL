@@ -1,10 +1,22 @@
 ante: 0
 blind_structure: null
-initial_stack: 1000
-max_round: 100
-small_blind: 10
+initial_stack: 1500
+max_round: 50
+small_blind: 15
 ai_players:
-- name: MonteCarlo
-  path: ./src/bots/ai_bot.py
-- name: CallBot
+- name: CallBot1
   path: ./src/bots/callbot.py
+- name: CallBot2
+  path: ./src/bots/callbot.py
+- name: CallBot3
+  path: ./src/bots/callbot.py
+- name: CallBot4
+  path: ./src/bots/callbot.py
+- name: CallBot5
+  path: ./src/bots/callbot.py
+- name: CallBot6
+  path: ./src/bots/callbot.py
+- name: MCB
+  path: ./src/bots/ai_bot.py
+- name: DQN
+  path: ./src/bots/DQNPlayer.py
