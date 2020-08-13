@@ -53,19 +53,17 @@ update_freq = 50 # how often to update model
 y = 0.99 # discount
 start_E = 1 # starting chance of random action
 end_E = 0.2 # final chance of random action
-annealings_steps = 100_000 # how many steps to reduce start_E to end_E
-num_episodes = 500_000
-pre_train_steps = 5_000 # how many steps of random action before training begin
+num_episodes = 500000 # total games of poker - was 500k
+annealings_steps = num_episodes/5 # how many steps to reduce start_E to end_E
+pre_train_steps = 1000 # how many steps of random action before training begin - was 5000
 load_model = False
-path = '../cache/models/DQN'
+path = '/content/drive/My Drive/PokerRLModels/poker-RL/src/cache/models/DQN9/DQN'
 h_size = 128 # the size of final conv layer before spliting it into advantage and value streams
 tau = 0.01 # rate to update target network toward primary network
 is_dueling = True # whether or not to use dueling architecture
 
 # %%
 emul = MyEmulator()
-emul.set_game_rule(9, 50, 15, 0)
-my_uuid = '9'
 players_info = {
     "1": { "name": "f1", "stack": 1500 },
     "2": { "name": "f2", "stack": 1500 },
@@ -77,6 +75,12 @@ players_info = {
     "8": { "name": "f8", "stack": 1500 },
     "9": { "name": "f9", "stack": 1500 }
 }
+# players_info = {
+#     "1": { "name": "f1", "stack": 1500 },
+#     "2": { "name": "f2", "stack": 1500 }
+# }
+emul.set_game_rule(len(players_info), 50, 15, 0)
+my_uuid = '9' # RL player number
 
 def init_emul(my_uuid_):
     global my_uuid
@@ -92,9 +96,18 @@ def init_emul(my_uuid_):
     emul.register_player("8", pm.RandomPlayer())
     emul.register_player("9", pm.CallPlayer())
 
+    # emul.register_player("1", pm.HeuristicPlayer())
+    # emul.register_player("2", pm.CallPlayer())
+    # emul.register_player("3", pm.FoldPlayer())
+    # emul.register_player("4", pm.FoldPlayer())
+    # emul.register_player("5", pm.HeuristicPlayer())
+    # emul.register_player("6", pm.HeuristicPlayer())
+    # emul.register_player("7", pm.RandomPlayer())
+    # emul.register_player("8", pm.RandomPlayer())
+    # emul.register_player("9", pm.CallPlayer())
 
     players_info = {
-        "1": { "name": "CallPlayer1", "stack": 1500 },
+        "1": { "name": "MCBot", "stack": 1500 },
         "2": { "name": "CallPlayer2", "stack": 1500 },
         "3": { "name": "FoldPlayer1", "stack": 1500 },
         "4": { "name": "FoldPlayer2", "stack": 1500 },
@@ -104,6 +117,13 @@ def init_emul(my_uuid_):
         "8": { "name": "RandomPlayer2", "stack": 1500 },
         "9": { "name": "DQN", "stack": 1500 }
     }
+    # players_info = {
+    #     "1": { "name": "MCBot", "stack": 1500 },
+    #     "2": { "name": "DQN", "stack": 1500 }
+    # }
+    # print (my_uuid)
+    # print ('Num players:')
+    # print (len(players_info))
 
 # %%
 tf.compat.v1.reset_default_graph()
@@ -138,7 +158,7 @@ with tf.compat.v1.Session() as sess:
         saver.restore(sess, ckpt.model_checkpoint_path)
     for i in range(num_episodes):
         episode_buffer = ExperienceBuffer()
-        init_emul(str(np.random.randint(1, 10)))
+        init_emul(str(np.random.randint(1, len(players_info) + 1)))
         
         initial_state = emul.generate_initial_game_state(players_info)
         msgs = []
@@ -255,7 +275,8 @@ with tf.compat.v1.Session() as sess:
                         
                         main_wp.summary_writer.add_summary(summary, total_steps)
                         if total_steps % (update_freq * 2) == 0:
-                            main_wp.summary_writer.flush()                        
+                            main_wp.summary_writer.flush()     
+                        print ('Trained model at', total_steps)
             else:
                 game_state, reward = a
                 if reward >= 0:
@@ -278,17 +299,17 @@ with tf.compat.v1.Session() as sess:
         r_list.append(r_all)
         j_list.append(j)
         print(i)
-        if i % 1000 == 0:
+        if i % 100 == 0:
             # saver.save(sess, path + '/model_' + str(i) + '.ckpt')
             #saver.save(sess, path, i)
-            saver.save(sess, '../cache/models/DQN', global_step = i)
-            print('Saved model')
+            saver.save(sess, path, global_step = i)
+            print('Saved model.')
         if i % 100 == 0:
             print(i, total_steps, np.mean(r_list[-10:]), e, np.median(action_list[-200:]))
-        writer = tf.compat.v1.summary.FileWriter('./log/DQN', sess.graph)    
+        writer = tf.compat.v1.summary.FileWriter('../cache/logs/DQN9', sess.graph)    
     # save after episodes complete
     #saver.save(sess, path + '/model_' + str(i) + '.ckpt')
-    saver.save(sess, '../cache/models/DQN', global_step = i)
+    saver.save(sess, path, global_step = i)
 print('Mean reward: {}'.format(sum(r_list) / num_episodes))
 
 # %%
