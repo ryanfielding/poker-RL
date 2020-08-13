@@ -47,7 +47,7 @@ with tf.Session() as sess:
     random_agent = RandomAgent(action_num=eval_env.action_num)
     env.set_agents([agent, random_agent])
     eval_env.set_agents([agent, random_agent])
-
+    print(env.state_shape)
     # Initialize global variables
     sess.run(tf.global_variables_initializer())
 

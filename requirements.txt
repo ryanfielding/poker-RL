@@ -1,4 +1,5 @@
+tensorflow
 numpy
-pypokerengine
-pypokergui
+pandas
+PyPokerEngine
 torch
