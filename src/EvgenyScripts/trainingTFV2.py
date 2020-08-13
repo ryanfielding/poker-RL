@@ -57,7 +57,7 @@ num_episodes = 500000 # total games of poker - was 500k
 annealings_steps = num_episodes/5 # how many steps to reduce start_E to end_E
 pre_train_steps = 1000 # how many steps of random action before training begin - was 5000
 load_model = False
-path = '../cache/models/DQN2P'
+path = '/content/drive/My Drive/PokerRLModels/poker-RL/src/cache/models/DQN9/DQN'
 h_size = 128 # the size of final conv layer before spliting it into advantage and value streams
 tau = 0.01 # rate to update target network toward primary network
 is_dueling = True # whether or not to use dueling architecture
@@ -107,7 +107,7 @@ def init_emul(my_uuid_):
     # emul.register_player("9", pm.CallPlayer())
 
     players_info = {
-        "1": { "name": "CallPlayer1", "stack": 1500 },
+        "1": { "name": "MCBot", "stack": 1500 },
         "2": { "name": "CallPlayer2", "stack": 1500 },
         "3": { "name": "FoldPlayer1", "stack": 1500 },
         "4": { "name": "FoldPlayer2", "stack": 1500 },
@@ -306,7 +306,7 @@ with tf.compat.v1.Session() as sess:
             print('Saved model.')
         if i % 100 == 0:
             print(i, total_steps, np.mean(r_list[-10:]), e, np.median(action_list[-200:]))
-        writer = tf.compat.v1.summary.FileWriter('./log/DQN3', sess.graph)    
+        writer = tf.compat.v1.summary.FileWriter('../cache/logs/DQN9', sess.graph)    
     # save after episodes complete
     #saver.save(sess, path + '/model_' + str(i) + '.ckpt')
     saver.save(sess, path, global_step = i)
