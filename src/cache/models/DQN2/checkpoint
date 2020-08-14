@@ -1,2 +1,4 @@
-model_checkpoint_path: "/Users/Ryan/Repos/poker-RL/src/cache/models/DQN2/DQN-0"
-all_model_checkpoint_paths: "/Users/Ryan/Repos/poker-RL/src/cache/models/DQN2/DQN-0"
+model_checkpoint_path: "/content/drive/My Drive/PokerRLModels/poker-RL/src/cache/models/DQN2/DQN-11600"
+all_model_checkpoint_paths: "/content/drive/My Drive/PokerRLModels/poker-RL/src/cache/models/DQN2/DQN-11400"
+all_model_checkpoint_paths: "/content/drive/My Drive/PokerRLModels/poker-RL/src/cache/models/DQN2/DQN-11500"
+all_model_checkpoint_paths: "/content/drive/My Drive/PokerRLModels/poker-RL/src/cache/models/DQN2/DQN-11600"
