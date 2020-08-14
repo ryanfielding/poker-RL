@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/Ryan/Repos/poker-RL/src/bots/models/DQN2/DQN-11600"
+all_model_checkpoint_paths: "/Users/Ryan/Repos/poker-RL/src/bots/models/DQN2/DQN-11600"
