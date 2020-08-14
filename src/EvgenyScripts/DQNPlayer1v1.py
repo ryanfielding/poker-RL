@@ -55,7 +55,7 @@ class DQNPlayer(BasePokerPlayer):
             tf.compat.v1.reset_default_graph()
    
         self.scalar_input = tf.compat.v1.placeholder(tf.float32, [None, 17 * 17 * 1])
-        self.features_input = tf.compat.v1.placeholder(tf.float32, [None, 20])
+        self.features_input = tf.compat.v1.placeholder(tf.float32, [None, 13]) #20 for 9 players, 13 for 1v1 (2)
         
         xavier_init = tf.compat.v1.keras.initializers.VarianceScaling(scale=1.0, mode="fan_avg", distribution="uniform")
         

@@ -2,7 +2,13 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Training logs
 log/
+src/cache/logs/
+
+# Google Drive shit
+.DS_Store
 
 # C extensions
 *.so
