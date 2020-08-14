@@ -6,6 +6,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn
+seaborn.set()
 #%matplotlib inline
 
 from pypokerengine.players import BasePokerPlayer
@@ -15,6 +17,7 @@ from pypokerengine.api.game import setup_config, start_poker
 import pickle
 import tensorflow as tf
 import random
+from tensorflow import keras
 
 import sys
 sys.path.insert(0, '../cache/')
@@ -55,9 +58,9 @@ start_E = 1 # starting chance of random action
 end_E = 0.2 # final chance of random action
 num_episodes = 500000 # total games of poker - was 500k
 annealings_steps = num_episodes/5 # how many steps to reduce start_E to end_E
-pre_train_steps = 1000 # how many steps of random action before training begin - was 5000
+pre_train_steps = 300 # how many steps of random action before training begin - was 5000 (1000 for DQN2)
 load_model = False
-path = '/content/drive/My Drive/PokerRLModels/poker-RL/src/cache/models/DQN2/DQN'
+path = '/Users/Ryan/Repos/poker-RL/src/cache/models/DQN2LogTests/DQN'
 h_size = 128 # the size of final conv layer before spliting it into advantage and value streams
 tau = 0.01 # rate to update target network toward primary network
 is_dueling = True # whether or not to use dueling architecture
@@ -146,11 +149,30 @@ j_list = []
 r_list = []
 action_list = []
 total_steps = 0
+q1_list = []
+q2_list = []
+e_list = []
+q_tar_list = []
+q_act_list = []
+err_list = []
+g_list = []
+v_list = []
+
+# setup scalar logging
+logdir = '../cache/logs/DQN2Logs'
+plotdir = '../cache/plots/'
+file_writer = tf.summary.create_file_writer(logdir)
+file_writer.set_as_default()
+tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
+r=tf.Variable(0.0)
+tf.compat.v1.summary.scalar('Perf/Reward', tensor=tf.convert_to_tensor(r))
+perf_summaries = tf.compat.v1.summary.merge_all()
 
 config = tf.compat.v1.ConfigProto()
 sess = tf.compat.v1.Session(config=config)
 
 with tf.compat.v1.Session() as sess:
+    writer = tf.compat.v1.summary.FileWriter(logdir, sess.graph)
     sess.run(init)
     if load_model:
         print('Loading model')
@@ -259,21 +281,40 @@ with tf.compat.v1.Session() as sess:
                         q1 = double_Q_[0]
                         q2 = double_Q[0]
                         al = np.mean(action_list[-10:])
-                                                
-                        summary = tf.compat.v1.Summary()
-                        summary.value.add(tag='Perf/Reward', simple_value=float(r))
-                        summary.value.add(tag='Perf/Lenght', simple_value=float(j))
-                        summary.value.add(tag='Perf/Action_list', simple_value=al)
-                        summary.value.add(tag='Perf/E', simple_value=e)                        
-                        summary.value.add(tag='Q/Q1', simple_value=float(q1))
-                        summary.value.add(tag='Q/Q2', simple_value=float(q2))
-                        summary.value.add(tag='Q/Target', simple_value=target_Q[0])
-                        summary.value.add(tag='Q/Action', simple_value=Q1[0])
-                        summary.value.add(tag='Loss/Error', simple_value=er)
-                        summary.value.add(tag='Loss/Grad_norm', simple_value=g)
-                        summary.value.add(tag='Loss/Var_norm', simple_value=v)
+
+                        #build lists
+                        q1_list.append(q1)
+                        q2_list.append(q2)
+                        e_list.append(e)
+                        q_tar_list.append(target_Q[0])
+                        q_act_list.append(Q1[0])
+                        err_list.append(er)
+                        g_list.append(g)
+                        v_list.append(v)
+
+                        #summary = tf.summary()
+                        #r_summary = tf.summary.scalar('Perf/Reward', data=float(r), step=total_steps)
+                        #tf.compat.v1.summary.scalar('Perf/Reward', tensor=tf.convert_to_tensor(r))
+
+                        # summary.value.add(tag='Perf/Reward', simple_value=float(r))
+                        # summary.value.add(tag='Perf/Lenght', simple_value=float(j))
+                        # summary.value.add(tag='Perf/Action_list', simple_value=al)
+                        # summary.value.add(tag='Perf/E', simple_value=e)                        
+                        # summary.value.add(tag='Q/Q1', simple_value=float(q1))
+                        # summary.value.add(tag='Q/Q2', simple_value=float(q2))
+                        # summary.value.add(tag='Q/Target', simple_value=target_Q[0])
+                        # summary.value.add(tag='Q/Action', simple_value=Q1[0])
+                        # summary.value.add(tag='Loss/Error', simple_value=er)
+                        # summary.value.add(tag='Loss/Grad_norm', simple_value=g)
+                        # summary.value.add(tag='Loss/Var_norm', simple_value=v)
+                        print('reward: ', r)
                         
-                        main_wp.summary_writer.add_summary(summary, total_steps)
+                        #summ = sess.run(perf_summaries)
+                        #writer.add_summary(summ, total_steps)
+                        #writer.flush()
+                        #tf.summary.write(summ_writer, tensor=r, step=total_steps)
+                        
+                        #main_wp.summary_writer.add_summary(summary, total_steps)
                         if total_steps % (update_freq * 2) == 0:
                             main_wp.summary_writer.flush()     
                         print ('Trained model at', total_steps)
@@ -294,21 +335,80 @@ with tf.compat.v1.Session() as sess:
 
                 last_img_state = None
                 last_action_num = None   
-            
+
         my_buffer.add(episode_buffer.buffer)
         r_list.append(r_all)
         j_list.append(j)
+        
         print(i)
         if i % 100 == 0:
             # saver.save(sess, path + '/model_' + str(i) + '.ckpt')
             #saver.save(sess, path, i)
             saver.save(sess, path, global_step = i)
             print('Saved model.')
-        if i % 100 == 0:
             print(i, total_steps, np.mean(r_list[-10:]), e, np.median(action_list[-200:]))
-        writer = tf.compat.v1.summary.FileWriter('../cache/logs/DQN2', sess.graph)    
+        if i%20 == 0 and i > 0:
+            #save plots
+            plt.plot(r_list)
+            plt.ylabel('reward')
+            plt.savefig(plotdir+'rewards'+str(i)+'.png')
+            plt.close()
+
+            plt.plot(action_list)
+            plt.ylabel('Actions')
+            plt.savefig(plotdir+'Acts'+str(i)+'.png')
+            plt.close()
+
+            plt.plot(j_list)
+            plt.ylabel('length')
+            plt.savefig(plotdir+'length'+str(i)+'.png')
+            plt.close()
+
+            plt.plot(e_list)
+            plt.ylabel('error')
+            plt.savefig(plotdir+'error'+str(i)+'.png')
+            plt.close()
+            
+            plt.plot(q1_list)
+            plt.ylabel('Q1')
+            plt.savefig(plotdir+'Q1_'+str(i)+'.png')
+            plt.close()
+
+            plt.plot(q2_list)
+            plt.ylabel('Q2')
+            plt.savefig(plotdir+'Q2_'+str(i)+'.png')
+            plt.close()
+
+            plt.plot(q_act_list)
+            plt.ylabel('Q Action')
+            plt.savefig(plotdir+'QAction'+str(i)+'.png')
+            plt.close()
+
+            plt.plot(q_tar_list)
+            plt.ylabel('Q Target')
+            plt.savefig(plotdir+'QTarget'+str(i)+'.png')
+            plt.close()
+
+            plt.plot(err_list)
+            plt.ylabel('Loss')
+            plt.savefig(plotdir+'Loss'+str(i)+'.png')
+            plt.close()
+
+            plt.plot(g_list)
+            plt.ylabel('Grad Norm')
+            plt.savefig(plotdir+'GNorm'+str(i)+'.png')
+            plt.close()
+
+            plt.plot(v_list)
+            plt.ylabel('Var Norm')
+            plt.savefig(plotdir+'VNorm'+str(i)+'.png')
+            plt.close()
+
+            #print('r: ', r_list)
+        #write tensor board graph
+        #writer = tf.compat.v1.summary.FileWriter(logdir, sess.graph)
     # save after episodes complete
-    #saver.save(sess, path + '/model_' + str(i) + '.ckpt')
+    
     saver.save(sess, path, global_step = i)
 print('Mean reward: {}'.format(sum(r_list) / num_episodes))
 
