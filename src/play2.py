@@ -1,9 +1,12 @@
 from pypokerengine.players import BasePokerPlayer
+from EvgenyScripts.PlayerModels import HeuristicPlayer
+from EvgenyScripts.PlayerModels import CallPlayer
+
 import sys
 sys.path.insert(0, './cache/')
 sys.path.insert(1, './EvgenyScripts/')
 
-import bots.DQNPlayer as dqn
+import bots.DQNPlayer1v1 as dqn
 
 class FishPlayer(BasePokerPlayer):  # Do not forget to make parent class as "BasePokerPlayer"
 
@@ -32,14 +35,14 @@ class FishPlayer(BasePokerPlayer):  # Do not forget to make parent class as "Bas
 
 from pypokerengine.api.game import setup_config, start_poker
 
-config = setup_config(max_round=10, initial_stack=100, small_blind_amount=5)
+config = setup_config(max_round=100, initial_stack=1000, small_blind_amount=15)
 config.register_player(name="p1", algorithm=dqn.DQNPlayer())
-config.register_player(name="p2", algorithm=FishPlayer())
-config.register_player(name="p3", algorithm=FishPlayer())
-config.register_player(name="p4", algorithm=FishPlayer())
-config.register_player(name="p5", algorithm=FishPlayer())
-config.register_player(name="p6", algorithm=FishPlayer())
-config.register_player(name="p7", algorithm=FishPlayer())
-config.register_player(name="p8", algorithm=FishPlayer())
-config.register_player(name="p9", algorithm=FishPlayer())
+config.register_player(name="p2", algorithm=CallPlayer())
+# config.register_player(name="p3", algorithm=FishPlayer())
+# config.register_player(name="p4", algorithm=CallPlayer())
+# config.register_player(name="p5", algorithm=HeuristicPlayer())
+# config.register_player(name="p6", algorithm=FishPlayer())
+# config.register_player(name="p7", algorithm=FishPlayer())
+# config.register_player(name="p8", algorithm=FishPlayer())
+# config.register_player(name="p9", algorithm=FishPlayer())
 game_result = start_poker(config, verbose=1)
