@@ -4,5 +4,5 @@ initial_stack: 1500
 max_round: 50
 small_blind: 15
 ai_players:
-- name: DQN
+- name: RLPlayer
   path: ./src/bots/DQNPlayer1v1.py
