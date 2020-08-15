@@ -6,17 +6,3 @@ small_blind: 15
 ai_players:
 - name: DQN
   path: ./src/bots/DQNPlayer1v1.py
-# - name: CallBot1
-#   path: ./src/bots/callbot.py
-# - name: CallBot2
-#   path: ./src/bots/callbot.py
-# - name: CallBot3
-#   path: ./src/bots/callbot.py
-# - name: CallBot4
-#   path: ./src/bots/callbot.py
-# - name: CallBot5
-#   path: ./src/bots/callbot.py
-# - name: CallBot6
-#   path: ./src/bots/callbot.py
-# - name: MCB
-#   path: ./src/bots/ai_bot.py
