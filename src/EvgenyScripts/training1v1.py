@@ -60,7 +60,7 @@ num_episodes = 500000 # total games of poker - was 500k
 annealings_steps = num_episodes/5 # how many steps to reduce start_E to end_E
 pre_train_steps = 300 # how many steps of random action before training begin - was 5000 (1000 for DQN2)
 load_model = False
-path = '/Users/Ryan/Repos/poker-RL/src/cache/models/DQN2LogTests/DQN'
+path = '/content/drive/My Drive/PokerRLModels/poker-RL/src/cache/models/DQN2Plots/DQN'
 h_size = 128 # the size of final conv layer before spliting it into advantage and value streams
 tau = 0.01 # rate to update target network toward primary network
 is_dueling = True # whether or not to use dueling architecture
@@ -347,7 +347,7 @@ with tf.compat.v1.Session() as sess:
             saver.save(sess, path, global_step = i)
             print('Saved model.')
             print(i, total_steps, np.mean(r_list[-10:]), e, np.median(action_list[-200:]))
-        if i%20 == 0 and i > 0:
+        if i % 1000 == 0 and i > 0:
             #save plots
             plt.plot(r_list)
             plt.ylabel('reward')
