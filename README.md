@@ -21,6 +21,6 @@ To visualize tf with tensorboard
 
 # Contributions
 *   Initial setup thanks to https://github.com/VIVelev/PokerBot-AI
-*   Working python version 3.6.0
 *   Bug fix in python module pypokergui 'site-packages\pypokergui\server\templates'. See here for fix: https://github.com/chrisking/PyPokerGUI/commit/00d63bec4b2a3ee195851521362f812321fa8e4d
 *   RLCard Contributors for references: https://github.com/datamllab/rlcard
+*   EvgenyKashin @ Github for Double-Dueling-DQN architecture.
