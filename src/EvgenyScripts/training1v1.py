@@ -1,5 +1,6 @@
 '''
     Full Credit: EvgenyKashin @ Github
+    Modified by Ryan Fielding to run with TensorFlow v2 and train at 1v1 poker.
 '''
 
 # %%
