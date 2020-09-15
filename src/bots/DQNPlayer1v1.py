@@ -7,7 +7,7 @@ import tensorflow as tf
 
 import sys
 sys.path.insert(0, '../cache/')
-sys.path.insert(1, '../EvgenyScripts/')
+sys.path.insert(0, '../')
 
 from util import *
 

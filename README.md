@@ -2,7 +2,7 @@
 Python poker Texas Hold'em AI through TensorFlow reinforcement learning and PyPokerEngine.
 
 # Install
-Run the command:
+Clone this repo, then run the command:
 *	  pip3 install -r requirements.txt
 
 # Play vs the AI in GUI
