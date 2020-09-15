@@ -10,9 +10,10 @@ Run this command in terminal.
 *     python3 -m pypokergui serve poker_conf.yaml --port 8000 --speed moderate
 
 # Training
-To train the AI at 1v1 poker.
-*	  cd src/EvgenyScripts/
+To train the AI at 1v1 poker (be sure to set which player you'd like to train against in line 104 of the script).
+*	  cd src/
 *	  python3 training1v1.py
+Pre-trained models can be found in src/cache/models/DQN2 for 1v1 or DQN9 for 1v8 poker.
 To visualize tf with tensorboard run this command in terminal:
 *     tensorboard --logdir=log/DQN2/
 
@@ -40,4 +41,4 @@ The project was completed for a directed study in school. Feel free to check the
 *   Initial setup thanks to https://github.com/VIVelev/PokerBot-AI
 *   Bug fix in python module pypokergui 'site-packages\pypokergui\server\templates'. See here for fix: https://github.com/chrisking/PyPokerGUI/commit/00d63bec4b2a3ee195851521362f812321fa8e4d
 *   RLCard Contributors for references: https://github.com/datamllab/rlcard
-*   EvgenyKashin @ Github for Double-Dueling-DQN architecture.
+*   EvgenyKashin @ Github for Double-Dueling-DQN architecture: https://github.com/EvgenyKashin/TensorPoker

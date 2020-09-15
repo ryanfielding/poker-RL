@@ -1,3 +1,7 @@
+'''
+    Full Credit: EvgenyKashin @ Github
+'''
+
 from pypokerengine.players import BasePokerPlayer
 from pypokerengine.utils.card_utils import Card, Deck
 from pypokerengine.utils.game_state_utils import restore_game_state

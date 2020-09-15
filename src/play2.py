@@ -1,10 +1,9 @@
 from pypokerengine.players import BasePokerPlayer
-from EvgenyScripts.PlayerModels import HeuristicPlayer
-from EvgenyScripts.PlayerModels import CallPlayer
+from PlayerModels import HeuristicPlayer
+from PlayerModels import CallPlayer
 
 import sys
 sys.path.insert(0, './cache/')
-sys.path.insert(1, './EvgenyScripts/')
 
 import bots.DQNPlayer1v1 as dqn
 

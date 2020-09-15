@@ -1,3 +1,8 @@
+'''
+    Full Credit: EvgenyKashin @ Github
+    Modified by Ryan Fielding to run with TensorFlow v2 and train at 1v1 poker.
+'''
+
 from pypokerengine.players import BasePokerPlayer
 from pypokerengine.utils.card_utils import Card, Deck
 from pypokerengine.utils.game_state_utils import restore_game_state
@@ -6,7 +11,7 @@ import pickle
 import tensorflow as tf
 
 import sys
-sys.path.insert(0, '../cache/')
+sys.path.insert(0, './cache/')
 from util import *
 # disable eager
 tf.compat.v1.disable_eager_execution()
@@ -48,14 +53,14 @@ class DQNPlayer(BasePokerPlayer):
         self.is_train = is_train
         self.debug = debug
 
-        with open('../cache/hole_card_estimation.pkl', 'rb') as f:
+        with open('./cache/hole_card_estimation.pkl', 'rb') as f:
             self.hole_card_est = pickle.load(f)
         
         if not is_train:
             tf.compat.v1.reset_default_graph()
    
         self.scalar_input = tf.compat.v1.placeholder(tf.float32, [None, 17 * 17 * 1])
-        self.features_input = tf.compat.v1.placeholder(tf.float32, [None, 20])
+        self.features_input = tf.compat.v1.placeholder(tf.float32, [None, 13]) #20 for 9 players, 13 for 1v1 (2)
         
         xavier_init = tf.compat.v1.keras.initializers.VarianceScaling(scale=1.0, mode="fan_avg", distribution="uniform")
         
@@ -126,7 +131,7 @@ class DQNPlayer(BasePokerPlayer):
         
         if is_restore:
             self.saver = tf.compat.v1.train.Saver()
-            ckpt = tf.train.get_checkpoint_state('../cache/models/DQN/')
+            ckpt = tf.train.get_checkpoint_state('./cache/models/DQN/')
             self.saver.restore(self.sess, ckpt.model_checkpoint_path)
         
     def _print(self, *msg):

@@ -21,7 +21,7 @@ import random
 from tensorflow import keras
 
 import sys
-sys.path.insert(0, '../cache/')
+sys.path.insert(0, './cache/')
 
 import PlayerModels as pm
 from MyEmulator import MyEmulator
@@ -161,8 +161,8 @@ g_list = []
 v_list = []
 
 # setup scalar logging
-logdir = '../cache/logs/DQN2Logs'
-plotdir = '../cache/plots/'
+logdir = './cache/logs/DQN2Logs'
+plotdir = './cache/plots/'
 file_writer = tf.summary.create_file_writer(logdir)
 file_writer.set_as_default()
 tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)

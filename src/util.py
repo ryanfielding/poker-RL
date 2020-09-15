@@ -1,3 +1,7 @@
+'''
+    Full Credit: EvgenyKashin @ Github
+'''
+
 import numpy as np
 from pypokerengine.utils.card_utils import Card, Deck
 import random
