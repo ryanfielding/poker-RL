@@ -6,6 +6,7 @@ Clone this repo, then run the command:
 *	  pip3 install -r requirements.txt
 
 # Play vs the AI in GUI
+![](reports/gui.gif)
 Run this command in terminal.
 *     python3 -m pypokergui serve poker_conf.yaml --port 8000 --speed moderate
 
